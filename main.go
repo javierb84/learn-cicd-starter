@@ -1,21 +1,25 @@
 package main
 
 import (
+	"strconv"
 	"database/sql"
 	"embed"
 	"io"
 	"log"
 	"net/http"
 	"os"
-
+	"time"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
-
 	"github.com/bootdotdev/learn-cicd-starter/internal/database"
-
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
+
+func unused() {
+    // this function does nothing
+    // and is called nowhere
+}
 
 type apiConfig struct {
 	DB *database.Queries
@@ -88,11 +92,19 @@ func main() {
 	v1Router.Get("/healthz", handlerReadiness)
 
 	router.Mount("/v1", v1Router)
+	// srv := &http.Server{
+	// 	Addr:    ":" + port,
+	// 	Handler: router,
+	// }
+
+	// log.Printf("Serving on port: %s\n", port)
+	// log.Fatal(srv.ListenAndServe())
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 5 * time.Second,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %s", strconv.Quote(port))
 	log.Fatal(srv.ListenAndServe())
 }
