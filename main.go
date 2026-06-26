@@ -1,24 +1,24 @@
 package main
 
 import (
-	"strconv"
 	"database/sql"
 	"embed"
+	"github.com/bootdotdev/learn-cicd-starter/internal/database"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/cors"
+	"github.com/joho/godotenv"
+	_ "github.com/tursodatabase/libsql-client-go/libsql"
 	"io"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/cors"
-	"github.com/joho/godotenv"
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
-	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
 func unused() {
-    // this function does nothing
-    // and is called nowhere
+	// this function does nothing
+	// and is called nowhere
 }
 
 type apiConfig struct {
